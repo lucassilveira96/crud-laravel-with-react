@@ -1,0 +1,363 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API LARAVEL PRODUCTS AND PRODUCT CATEGORIES",
+        "description": "api of products and product categories",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/products/{id}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get one products by id",
+                "description": "Retrieves one product by ID.",
+                "operationId": "e5c6fc87623f19ab60293a622e39f50e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get one product by id"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Delete product by id",
+                "description": "Delete product by id",
+                "operationId": "deleteProduct",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID Product",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Product not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Update product by id",
+                "description": "Update product by id",
+                "operationId": "updateProduct",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID Product",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "product_category_id": {
+                                        "type": "integer",
+                                        "format": "int64",
+                                        "example": "1"
+                                    },
+                                    "product_name": {
+                                        "type": "string",
+                                        "example": "mouse gamer usado"
+                                    },
+                                    "product_value": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "108.95"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update Product by id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "format": "int64",
+                                            "example": 1
+                                        },
+                                        "product_category_id": {
+                                            "type": "integer",
+                                            "format": "int64",
+                                            "example": "1"
+                                        },
+                                        "product_name": {
+                                            "type": "string",
+                                            "example": "mouse gamer usado"
+                                        },
+                                        "product_value": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": "108.95"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                }
+            }
+        },
+        "/api/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get all products",
+                "description": "Retrieves all products.",
+                "operationId": "ca48667c3b28bcf65ab304815a67b7f1",
+                "responses": {
+                    "200": {
+                        "description": "Get all products"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Create one product",
+                "description": "Create a new product.",
+                "operationId": "826df3781c04c126366c07fb7cdd772f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "product_category_id",
+                                    "product_name",
+                                    "product_value"
+                                ],
+                                "properties": {
+                                    "product_category_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "product_name": {
+                                        "type": "string",
+                                        "example": "mouse gamer"
+                                    },
+                                    "product_value": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "105.50"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Produto cadastrado com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/product/categories/{id}": {
+            "get": {
+                "tags": [
+                    "Product Categories"
+                ],
+                "summary": "Get one product category by id",
+                "description": "Retrieves one product by ID.",
+                "operationId": "cef888837b497dcf5ce2ac9a5d9f9571",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get one product category by id"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Product Categories"
+                ],
+                "summary": "Delete product category by id",
+                "description": "Delete product category by id",
+                "operationId": "deleteProductCategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID Product Category",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Product Category not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Product Categories"
+                ],
+                "summary": "Update product category by id",
+                "description": "Update product by id",
+                "operationId": "updateProductCategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID Product Category",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "product_category_name": {
+                                        "type": "string",
+                                        "example": "t"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update Product by id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "format": "int64",
+                                            "example": 1
+                                        },
+                                        "product_category_name": {
+                                            "type": "string",
+                                            "example": "technologies"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product Category not found"
+                    }
+                }
+            }
+        },
+        "/api/product/categories": {
+            "get": {
+                "tags": [
+                    "Product Categories"
+                ],
+                "summary": "Get all product categories",
+                "description": "Retrieves all product categories.",
+                "operationId": "2dfc9df53435ffb071df7cd605505a2a",
+                "responses": {
+                    "200": {
+                        "description": "Get all product categories"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Product Categories"
+                ],
+                "summary": "Create one product category",
+                "description": "Create a new product category.",
+                "operationId": "e7b4c175db4d402dac6def92ce4aabf5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "product_category_name"
+                                ],
+                                "properties": {
+                                    "product_category_name": {
+                                        "type": "string",
+                                        "example": "technology"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categoria de Produto cadastrada com sucesso"
+                    }
+                }
+            }
+        }
+    }
+}
