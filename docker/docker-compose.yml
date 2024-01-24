@@ -13,6 +13,7 @@ services:
       - laravel-app
     networks:
       - app-network
+    command: yarn start
 
   laravel-app:
     build:

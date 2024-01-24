@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:18.17.0-alpine
 
 WORKDIR /var/www/html
 
@@ -7,8 +7,9 @@ RUN mkdir -p frontend
 WORKDIR /var/www/html/frontend
 
 COPY . .
-COPY . .
+
+RUN yarn
+
+CMD ["yarn", "build"]
 
 EXPOSE 3000
-
-CMD ["yarn", "dev"]
