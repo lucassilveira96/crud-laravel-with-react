@@ -25,9 +25,18 @@ import {deleteProductCategory, getProductCategories } from '../../../services/pr
 import { CATEGORY_DELETED_SUCCESS, ERROR_CREATING_PRODUCT_CATEGORY, ERROR_DELETING_CATEGORY } from 'src/utils/messages';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
+interface ProductCategory {
+  id: number;
+  product_category_name: string;
+}
 
+interface ConfirmDeleteDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirmDelete: () => void;
+}
 
-const ConfirmDeleteDialog = ({ isOpen, onClose, onConfirmDelete }) => {
+const ConfirmDeleteDialog: React.FC<ConfirmDeleteDialogProps> = ({ isOpen, onClose, onConfirmDelete }) => {
   return (
     <Dialog open={isOpen} onClose={onClose}>
       <DialogTitle>Confirmar Exclusão</DialogTitle>
@@ -46,18 +55,18 @@ const ConfirmDeleteDialog = ({ isOpen, onClose, onConfirmDelete }) => {
   );
 };
 
-const ProductCategoryList = () => {
+const ProductCategoryList: React.FC = () =>  {
   const [loading, setLoading] = useState(true);
-  const [productCategories, setProductCategories] = useState([]);
-  const [originalProductCategories, setOriginalProductCategories] = useState([]);
-  const [deleteProductCategoryId, setDeleteProductCategoriesId] = useState(null);
+  const [productCategories, setProductCategories] = useState<ProductCategory[]>([]);
+  const [originalProductCategories, setOriginalProductCategories] = useState<ProductCategory[]>([]);
+  const [deleteProductCategoryId, setDeleteProductCategoriesId] = useState<number | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [filter, setFilter] = useState('');
   const router = useRouter();
-  const [viewCategoryId, setViewCategoryId] = useState(null);
+  const [viewCategoryId, setViewCategoryId] = useState<number | null>(null);
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
 
-  const handleViewCategory = (categoryId) => {
+  const handleViewCategory = (categoryId:any) => {
     setViewCategoryId(categoryId);
     setIsViewDialogOpen(true);
   };
@@ -84,7 +93,7 @@ const ProductCategoryList = () => {
     fetchData();
   }, []);
 
-  const handleDeleteProduct = async (productCategoryId) => {
+  const handleDeleteProduct = async (productCategoryId:any) => {
     try {
       await deleteProductCategory(productCategoryId);
       setProductCategories((prevCategories) =>
@@ -99,7 +108,7 @@ const ProductCategoryList = () => {
     }
   };
 
-  const handleOpenDialog = (productCategoryId) => {
+  const handleOpenDialog = (productCategoryId:any) => {
     setDeleteProductCategoriesId(productCategoryId);
     setIsDialogOpen(true);
   };
@@ -116,7 +125,7 @@ const ProductCategoryList = () => {
     }
   };
 
-  const handleFilterChange = (event) => {
+  const handleFilterChange = (event:any) => {
     const value = event.target.value.toLowerCase();
     setFilter(value);
 
@@ -231,10 +240,10 @@ const ProductCategoryList = () => {
       <Dialog open={isViewDialogOpen} onClose={() => handleCloseViewDialog()}>
           <DialogTitle>Detalhes da Categoria de Produto</DialogTitle>
           <DialogContent>
-            {viewCategoryId !== null && (
+          {viewCategoryId !== null && (
               <div>
-                <strong>ID:</strong> {productCategories.find((category) => category.id === viewCategoryId).id}<br />
-                <strong>Nome:</strong> {productCategories.find((category) => category.id === viewCategoryId).product_category_name}<br />
+                <strong>ID:</strong> {productCategories.find((category) => category.id === viewCategoryId)?.id}<br />
+                <strong>Nome:</strong> {productCategories.find((category) => category.id === viewCategoryId)?.product_category_name}<br />
               </div>
             )}
           </DialogContent>

@@ -30,7 +30,7 @@ export const getCategories = async () => {
   }
 };
 
-export const deleteProduct = async (productId) => {
+export const deleteProduct = async (productId:any) => {
   try {
     const response = await fetch(`${apiBaseUrl}/products/${productId}`, {
       method: 'DELETE',
@@ -51,7 +51,7 @@ export const deleteProduct = async (productId) => {
   }
 };
 
-export const createProduct = async (requestData) => {
+export const createProduct = async (requestData:any) => {
   try {
     const response = await fetch(`${apiBaseUrl}/products`, {
       method: 'POST',
@@ -75,7 +75,7 @@ export const createProduct = async (requestData) => {
   }
 };
 
-export const getProductDetails = async (productId) => {
+export const getProductDetails = async (productId:any) => {
   try {
     const response = await fetch(`${apiBaseUrl}/products/${productId}`);
     const data = await response.json();
@@ -91,7 +91,7 @@ export const getProductDetails = async (productId) => {
   }
 };
 
-export const updateProduct = async (productId, requestData) => {
+export const updateProduct = async (productId:any, requestData:any) => {
   try {
     const response = await fetch(`${apiBaseUrl}/products/${productId}`, {
       method: 'PATCH',

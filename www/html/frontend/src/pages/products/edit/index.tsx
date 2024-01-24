@@ -17,21 +17,32 @@ import {
   ERROR_EDITING_PRODUCT,
 } from '../../../utils/messages';
 
-const ProductEdit = () => {
-  const router = useRouter();
-  const { id } = router.query;
-  const [formData, setFormData] = useState({
+interface ProductCategory {
+  id: number;
+  product_category_name: string;
+}
+
+interface ProductFormData {
+  category: ProductCategory | null;
+  productName: string;
+  productValue: string;
+}
+
+const ProductEdit: React.FC = () => {
+  const [formData, setFormData] = useState<ProductFormData>({
     category: null,
     productName: '',
     productValue: '',
   });
 
-  const [categories, setCategories] = useState([]);
+  const router = useRouter();
+  const [categories, setCategories] = useState<ProductCategory[]>([]);
   const [formErrors, setFormErrors] = useState({
-    category: '',
+    category: null,
     productName: '',
     productValue: '',
   });
+  const { id } = router.query;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,7 +90,7 @@ const ProductEdit = () => {
 
     setFormErrors({
       ...formErrors,
-      category: '',
+      category: null,
     });
   };
 
@@ -87,20 +98,18 @@ const ProductEdit = () => {
     e.preventDefault();
 
     const errors: { [key: string]: string } = {};
-    Object.keys(formData).forEach((key) => {
-      if (!formData[key]) {
-        errors[key] = REQUIRED_FIELD;
-      }
-    });
+    if (formData && typeof formData === 'object') {
+      Object.keys(formData).forEach((key) => {
+        const formDataKey = key as keyof typeof formData;
 
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-
-      return;
+        if (!formData[formDataKey]) {
+          errors[key] = REQUIRED_FIELD;
+        }
+      });
     }
 
     const requestData = {
-      product_category_id: formData.category.id,
+      product_category_id: formData.category?.id,
       product_name: formData.productName,
       product_value: parseFloat(formData.productValue),
     };

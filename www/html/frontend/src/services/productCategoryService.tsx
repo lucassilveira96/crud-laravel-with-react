@@ -13,7 +13,7 @@ export const getProductCategories = async () => {
   }
 };
 
-export const createProductCategory = async (requestData) => {
+export const createProductCategory = async (requestData:any) => {
   try {
     const response = await fetch(`${apiBaseUrl}/product/categories`, {
       method: 'POST',
@@ -37,7 +37,7 @@ export const createProductCategory = async (requestData) => {
   }
 };
 
-export const deleteProductCategory = async (categoryId) => {
+export const deleteProductCategory = async (categoryId:any) => {
   try {
     const response = await fetch(`${apiBaseUrl}/product/categories/${categoryId}`, {
       method: 'DELETE',
@@ -59,7 +59,7 @@ export const deleteProductCategory = async (categoryId) => {
   }
 };
 
-export const getProductCategoryDetails = async (categoryId) => {
+export const getProductCategoryDetails = async (categoryId:any) => {
   try {
     const response = await fetch(`${apiBaseUrl}/product/categories/${categoryId}`);
     const data = await response.json();
@@ -71,7 +71,7 @@ export const getProductCategoryDetails = async (categoryId) => {
   }
 };
 
-export const updateProductCategory = async (categoryId, requestData) => {
+export const updateProductCategory = async (categoryId:any, requestData:any) => {
   try {
     const response = await fetch(`${apiBaseUrl}/product/categories/${categoryId}`, {
       method: 'PATCH',

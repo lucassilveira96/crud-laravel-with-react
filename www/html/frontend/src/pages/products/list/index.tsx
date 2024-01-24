@@ -25,18 +25,30 @@ import { deleteProduct, getProducts } from 'src/services/productService';
 import { ERROR_DELETING_PRODUCT, ERROR_FETCHING_PRODUCTS, PRODUCT_DELETED_SUCCESS } from 'src/utils/messages';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
-const ProductList = () => {
+interface ProductCategory {
+  id: number;
+  product_category_name: string;
+}
+
+interface Product {
+  id: number;
+  product_name: string;
+  product_category: ProductCategory;
+  product_value: number;
+}
+
+const ProductList: React.FC = () => {
   const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState([]);
-  const [originalProducts, setOriginalProducts] = useState([]);
-  const [deleteProductId, setDeleteProductId] = useState(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [originalProducts, setOriginalProducts] = useState<Product[]>([]);
+  const [deleteProductId, setDeleteProductId] = useState<number | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [filter, setFilter] = useState('');
   const router = useRouter();
-  const [viewProductId, setViewProductId] = useState(null);
+  const [viewProductId, setViewProductId] = useState<number | null>(null);
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
 
-  const handleViewProduct = (productId) => {
+  const handleViewProduct = (productId:any) => {
     setViewProductId(productId);
     setIsViewDialogOpen(true);
   };
@@ -59,7 +71,7 @@ const ProductList = () => {
     }
   };
 
-  const handleDeleteProduct = async (productId) => {
+  const handleDeleteProduct = async (productId:any) => {
     try {
       await deleteProduct(productId);
       toast.success(PRODUCT_DELETED_SUCCESS);
@@ -70,7 +82,7 @@ const ProductList = () => {
     }
   };
 
-  const handleOpenDialog = (productId) => {
+  const handleOpenDialog = (productId:any) => {
     setDeleteProductId(productId);
     setIsDialogOpen(true);
   };
@@ -87,7 +99,7 @@ const ProductList = () => {
     }
   };
 
-  const handleFilterChange = (event) => {
+  const handleFilterChange = (event:any) => {
     const value = event.target.value.toLowerCase();
     setFilter(value);
 
@@ -221,12 +233,12 @@ const ProductList = () => {
       <Dialog open={isViewDialogOpen} onClose={() => handleCloseViewDialog()}>
         <DialogTitle>Detalhes do Produto</DialogTitle>
         <DialogContent>
-          {viewProductId !== null && (
+        {viewProductId !== null && (
             <div>
-              <strong>ID:</strong> {products.find((product) => product.id === viewProductId).id}<br />
-              <strong>Nome:</strong> {products.find((product) => product.id === viewProductId).product_name}<br />
-              <strong>Categoria:</strong> {products.find((product) => product.id === viewProductId).product_category.product_category_name}<br />
-              <strong>Valor:</strong> {products.find((product) => product.id === viewProductId).product_value}<br />
+              <strong>ID:</strong> {products.find((product) => product.id === viewProductId)?.id}<br />
+              <strong>Nome:</strong> {products.find((product) => product.id === viewProductId)?.product_name}<br />
+              <strong>Categoria:</strong> {products.find((product) => product.id === viewProductId)?.product_category?.product_category_name}<br />
+              <strong>Valor:</strong> {products.find((product) => product.id === viewProductId)?.product_value}<br />
             </div>
           )}
         </DialogContent>

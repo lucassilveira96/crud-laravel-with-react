@@ -17,17 +17,28 @@ import {
   PRODUCT_CREATED_SUCCESS,
 } from '../../../utils/messages';
 
-const ProductAdd = () => {
-  const [formData, setFormData] = useState({
+interface ProductCategory {
+  id: number;
+  product_category_name: string;
+}
+
+interface ProductFormData {
+  category: ProductCategory | null;
+  productName: string;
+  productValue: string;
+}
+
+const ProductAdd: React.FC = () => {
+  const [formData, setFormData] = useState<ProductFormData>({
     category: null,
     productName: '',
     productValue: '',
   });
 
   const router = useRouter();
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<ProductCategory[]>([]);
   const [formErrors, setFormErrors] = useState({
-    category: '',
+    category: null,
     productName: '',
     productValue: '',
   });
@@ -58,16 +69,16 @@ const ProductAdd = () => {
   };
 
   const handleCategoryChange = (e: ChangeEvent<{ value: unknown }>) => {
-    const selectedCategory = categories.find(category => category.product_category_name === e.target.value);
+    const selectedCategory = categories.find(category => category.product_category_name === e.target.value) || null;
 
     setFormData({
       ...formData,
-      category: selectedCategory || null,
+      category: selectedCategory,
     });
 
     setFormErrors({
       ...formErrors,
-      category: '',
+      category: null,
     });
   };
 
@@ -75,20 +86,23 @@ const ProductAdd = () => {
     e.preventDefault();
 
     const errors: { [key: string]: string } = {};
-    Object.keys(formData).forEach((key) => {
-      if (!formData[key]) {
-        errors[key] = REQUIRED_FIELD;
-      }
-    });
+    if (formData && typeof formData === 'object') {
+      Object.keys(formData).forEach((key) => {
+        const formDataKey = key as keyof typeof formData;
+
+        if (!formData[formDataKey]) {
+          errors[key] = REQUIRED_FIELD;
+        }
+      });
+    }
 
     if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
 
       return;
     }
 
     const requestData = {
-      product_category_id: formData.category.id,
+      product_category_id: formData.category?.id,
       product_name: formData.productName,
       product_value: parseFloat(formData.productValue),
     };
@@ -98,11 +112,7 @@ const ProductAdd = () => {
       toast.success(PRODUCT_CREATED_SUCCESS);
       router.push(`/products/list`);
     } catch (error) {
-      if (error.message) {
-        toast.error(error.message);
-      } else {
         toast.error(CREATE_PRODUCT_ERROR);
-      }
     }
 
     setFormData({
@@ -111,7 +121,7 @@ const ProductAdd = () => {
       productValue: '',
     });
     setFormErrors({
-      category: '',
+      category: null,
       productName: '',
       productValue: '',
     });
