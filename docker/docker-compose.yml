@@ -1,6 +1,20 @@
 version: '3'
+
 services:
-  app:
+  react-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.react
+    ports:
+      - '3000:3000'
+    volumes:
+      - '../www/html/frontend:/var/www/html/frontend'
+    depends_on:
+      - laravel-app
+    networks:
+      - app-network
+
+  laravel-app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -18,7 +32,7 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=secret
     networks:
-      - php-laravel
+      - app-network
 
   db:
     image: mysql:5.7
@@ -28,7 +42,7 @@ services:
       - MYSQL_DATABASE=laravel
       - MYSQL_ROOT_PASSWORD=secret
     networks:
-      - php-laravel
+      - app-network
 
   db-test:
     image: mysql:5.7
@@ -36,8 +50,8 @@ services:
       - MYSQL_DATABASE=laravel_test
       - MYSQL_ROOT_PASSWORD=secret
     networks:
-      - php-laravel
-  
+      - app-network
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: 'phpmyadmin'
@@ -49,9 +63,10 @@ services:
       PMA_USER: root
       PMA_PASSWORD: secret
     networks:
-      - php-laravel
+      - app-network
     depends_on:
       - db
 
 networks:
-  php-laravel:
+  app-network:
+    driver: bridge

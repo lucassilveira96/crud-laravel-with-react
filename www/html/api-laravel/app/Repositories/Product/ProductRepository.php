@@ -29,7 +29,7 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getById(int $id): ?Product
     {
-        return $this->productModel->find($id);
+        return $this->productModel::with('ProductCategory')->find($id);
     }
 
     /**
@@ -48,7 +48,7 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getAll(): ?object
     {
-        return $this->productModel->all();
+        return $this->productModel::with('ProductCategory')->get();
     }
 
     /**

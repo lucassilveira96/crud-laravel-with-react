@@ -20,4 +20,3 @@ CMD cd /var/www/html/api-laravel \
    && php artisan route:clear \
    && php artisan test \
    && php artisan serve --host=0.0.0.0 --port=8000
-
