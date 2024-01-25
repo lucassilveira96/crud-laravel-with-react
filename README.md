@@ -1,4 +1,4 @@
-# API LARAVEL + MYSQL COM DOCKER
+# API LARAVEL + MYSQL COM DOCKER + REACT
 Descrição breve da aplicação.
 
 # Pré-requisitos
@@ -11,7 +11,7 @@ Antes de começar, verifique se você atende aos seguintes requisitos:
 
 # Clone o repositório:
 ``
-git clone https://github.com/lucassilveira96/api-laravel-docker
+git clone https://github.com/lucassilveira96/crud-laravel-with-react
 ``
 # Deploy
 Acesse o diretorio do projeto e no terminal insira o seguinte comando:
